@@ -1,12 +1,20 @@
 local lsp_installer = require("nvim-lsp-installer")
+local user_settings = require("user_settings")
 lsp_installer.setup()
 
 for _, server in pairs(lsp_installer.get_installed_servers()) do
   require("lspconfig")[server.name].setup({
     on_attach = function(client, bufnr)
-      require("lsp_signature").on_attach({
-        hint_prefix = "",
-      })
+      local lsp_signature_config = {
+        hint_prefix = ""
+      }
+
+      for k, v in pairs(user_settings.lsp_signature) do
+        lsp_signature_config[k] = v
+      end
+
+
+      require("lsp_signature").on_attach(lsp_signature_config)
 
       local formatters = require("plugins.lsp.utils")
       local client_filetypes = client.config.filetypes or {}
