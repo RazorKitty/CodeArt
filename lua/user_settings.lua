@@ -8,7 +8,7 @@ disable_plugins = {
   -- NOTE: These two plugins are for better performance
   -- and fixing one of neovim bugs.
   impatient = false,
-  fix_cursor_hold = false,
+  fix_cursor_htostirngold = false,
 
   -- NOTE: Many plugins use this plugin as a dependency.
   -- I suggest to not remove this plugins.
@@ -42,8 +42,8 @@ disable_plugins = {
 
   -- NOTE: scrollview is builtin scrollbar for CodeArt and
   -- And neoscroll is for scroll animation.
-  scrollview = false,
-  neoscroll = false,
+  scrollview = true,
+  neoscroll = true,
 
   -- NOTE: nvim-cmp and luasnip are for code completion.
   nvim_cmp = false,
@@ -170,14 +170,6 @@ local config = {
       -- This function is for format on save.
       -- on_attach = function(client)
       --   if client.resolved_capabilities.document_formatting then
-      --     vim.cmd([[
-      --       augroup LspFormatting
-      --           autocmd! * <buffer>
-      --           autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
-      --       augroup END
-      --       ]])
-      --   end
-      -- end,
     })
   end,
   treesitter = {
@@ -185,8 +177,48 @@ local config = {
       enable = true,
     },
   },
+  bufferline = {
+    mode = function ()
+      return "tabs"
+    end
+  },
+  dapui = {
+    floating = {
+      border = "single"
+    }
+  },
+  lspsaga = {
+    border_style = "single"
+  },
+  cmp = {
+    window = {
+      completion = {
+        border = "single"
+      },
+      documentation = {
+        border = "single"
+      }
+    }
+  },
+  toggleterm = {
+    open_mapping = [[<m-return>]],
+    direction = "float",
+    float_opts = {
+      border = "single",
+      width = 120,
+      height = 40,
+      winblend = 0
+    },
+  },
+  lsp_signature = {
+    bind = false,
+    handler_opts = { border = "single" },
+  },
   other_configs = function()
-    vim.cmd("colorscheme enfocado")
+    vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
+    vim.g.tokyonight_dark_sidebar = true
+    vim.g.tokyonight_lualine_sidebar = true
+    vim.cmd("colorscheme tokyonight")
     -- Other settings here
     -- For examples for disabling line number:
     -- vim.opt.number = false
@@ -225,6 +257,29 @@ local config = {
     -- user_indent_blankline_style = 1 -- You can choose between predefined 1, 2, 3, 4,5 and 6
     -- or you can use your favorite character.
     -- user_indent_blankline_style = ""
+
+    map("n", "<M-t>", ":execute('tabnew')<CR>", {silent = true})
+    map("n", "<M-T>", ":execute('tabclose')<CR>", {silent = true})
+
+    map("n", "<M-q>", ":execute('qa')<CR>", {silent = true})
+    map("n", "<M-x>", ":execute('wqa')<CR>", {silent = true})
+    map("n", "<M-Q>", ":execute('qa!')<CR>", {silent = true})
+
+    map("n", "<M-j>", ":execute('wincmd j')<CR>", {silent = true})
+    map("n", "<M-k>", ":execute('wincmd k')<CR>", {silent = true})
+    map("n", "<M-h>", ":execute('wincmd h')<CR>", {silent = true})
+    map("n", "<M-l>", ":execute('wincmd l')<CR>", {silent = true})
+
+    map("n", "<M-o>", ":execute('vsplit')<CR>", {silent = true})
+    map("n", "<M-O>", ":execute('split')<CR>", {silent = true})
+    map("n", "<M-w>", ":execute('q')<CR>", {silent = true})
+
+    --map("n", "<M-Return>", "<cmd>ToggleTerm<CR>", {silent = true})
+    --map("t", "<M-Return>", "<cmd>ToggleTerm<CR>", {silent = true})
+
+    -- lspsaga
+    map("n", "gr", "<cmd>Lspsaga rename<CR>", { silent = true,noremap = true })
+
   end,
 }
 
