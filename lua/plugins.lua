@@ -347,7 +347,6 @@ return require("packer").startup({
     -- LSP signature.
     use({
       "ray-x/lsp_signature.nvim",
-      event = "InsertEnter",
       -- Config of this plugin is in plugins/lsp/lsp.lua
       disable = disable_plugins.lsp_signature,
     })
