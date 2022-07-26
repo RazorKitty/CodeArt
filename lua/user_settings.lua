@@ -178,9 +178,33 @@ local config = {
     },
   },
   bufferline = {
-    mode = function ()
-      return "tabs"
-    end
+    options = {
+      mode = "tabs",
+      show_close_icon = false,
+      show_buffer_close_icons = false,
+      numbers = function(opts)
+        return string.format("%s", opts.id)
+      end,
+      diagnostics = "nvim_lsp",
+      offsets = {
+        {
+          filetype = "NvimTree",
+          text = "File Explorer",
+          highlight = "Directory",
+          text_align = "left",
+        },
+        {
+          filetype = "vista_kind",
+          text = "Lsp Tags",
+          text_align = "center",
+        },
+        {
+          filetype = "Outline",
+          text = " Lsp Tags",
+          text_align = "center",
+        },
+      },
+    },
   },
   dapui = {
     floating = {
@@ -213,6 +237,13 @@ local config = {
   lsp_signature = {
     bind = false,
     handler_opts = { border = "single" },
+  },
+  nvim_tree = {
+    disable_netrw = true,
+    open_on_tab = false,
+    open_on_setup = true,
+    hijack_cursor = true,
+    hijack_directories = true
   },
   other_configs = function()
     vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
@@ -258,28 +289,51 @@ local config = {
     -- or you can use your favorite character.
     -- user_indent_blankline_style = ""
 
-    map("n", "<M-t>", ":execute('tabnew')<CR>", {silent = true})
-    map("n", "<M-T>", ":execute('tabclose')<CR>", {silent = true})
+    do -- bufferline / tabs
+      map("n", "<M-t>", "<cmd>tabnew<CR><cmd>Telescope find_files<CR>", {silent = true}) -- open a new tab
+      map("n", "<M-T>", "<cmd>tabclose<CR>", {silent = true}) -- close tab
+      map("n", "<M-1>", "<cmd>BufferLineGoToBuffer 1<CR>", { silent = true, noremap = true })
+      map("n", "<M-2>", "<cmd>BufferLineGoToBuffer 2<CR>", { silent = true, noremap = true })
+      map("n", "<M-3>", "<cmd>BufferLineGoToBuffer 3<CR>", { silent = true, noremap = true })
+      map("n", "<M-4>", "<cmd>BufferLineGoToBuffer 4<CR>", { silent = true, noremap = true })
+      map("n", "<M-5>", "<cmd>BufferLineGoToBuffer 5<CR>", { silent = true, noremap = true })
+      map("n", "<M-6>", "<cmd>BufferLineGoToBuffer 6<CR>", { silent = true, noremap = true })
+      map("n", "<M-7>", "<cmd>BufferLineGoToBuffer 7<CR>", { silent = true, noremap = true })
+      map("n", "<M-8>", "<cmd>BufferLineGoToBuffer 8<CR>", { silent = true, noremap = true })
+      map("n", "<M-9>", "<cmd>BufferLineGoToBuffer 9<CR>", { silent = true, noremap = true })
+    end
 
-    map("n", "<M-q>", ":execute('qa')<CR>", {silent = true})
-    map("n", "<M-x>", ":execute('wqa')<CR>", {silent = true})
-    map("n", "<M-Q>", ":execute('qa!')<CR>", {silent = true})
+    do -- quick exit
+      map("n", "<M-w>", "<cmd>q<CR>", {silent = true}) -- close window
+      map("n", "<M-x>", "<cmd>wq<CR>", {silent = true}) -- close window, save
 
-    map("n", "<M-j>", ":execute('wincmd j')<CR>", {silent = true})
-    map("n", "<M-k>", ":execute('wincmd k')<CR>", {silent = true})
-    map("n", "<M-h>", ":execute('wincmd h')<CR>", {silent = true})
-    map("n", "<M-l>", ":execute('wincmd l')<CR>", {silent = true})
+      map("n", "<M-q>", "<cmd>qa<CR>", {silent = true}) -- close all windows, dont save
+      map("n", "<M-Q>", "<cmd>qa!<CR>", {silent = true}) -- close all windows, dont save, dont warn
+      map("n", "<M-X>", "<cmd>wqa<CR>", {silent = true}) -- close all windows, save
+    end
 
-    map("n", "<M-o>", ":execute('vsplit')<CR>", {silent = true})
-    map("n", "<M-O>", ":execute('split')<CR>", {silent = true})
-    map("n", "<M-w>", ":execute('q')<CR>", {silent = true})
+    do -- window navigation
+      map("n", "<M-j>", "<cmd>wincmd j<CR>", {silent = true}) -- move focus down
+      map("n", "<M-k>", "<cmd>wincmd k<CR>", {silent = true}) -- move focus up
+      map("n", "<M-h>", "<cmd>wincmd h<CR>", {silent = true}) -- move focus left
+      map("n", "<M-l>", "<cmd>wincmd l<CR>", {silent = true}) -- move focus right
+    end
 
-    --map("n", "<M-Return>", "<cmd>ToggleTerm<CR>", {silent = true})
-    --map("t", "<M-Return>", "<cmd>ToggleTerm<CR>", {silent = true})
+    do -- open new window
+      map("n", "<M-o>", "<cmd>vsplit<CR><cmd>Telescope find_files<CR>", {silent = true}) -- split left
+      map("n", "<M-O>", "<cmd>split<CR><cmd>Telescope find_files<CR>", {silent = true}) -- split bellow
+    end
 
-    -- lspsaga
-    map("n", "gr", "<cmd>Lspsaga rename<CR>", { silent = true,noremap = true })
+    do -- Lspsaga
+      map("n", "gr", "<cmd>Lspsaga rename<CR>", { silent = true, noremap = true }) -- rename symbol
+      map("n", "gf", "<cmd>Lspsaga lsp_finder<CR>", { silent = true, noremap = true }) -- find usage
+      map("n", "gh", "<cmd>Lspsaga hover_doc<CR>", { silent = true, noremap = true }) -- hover doc
+      map("n", "gd", "<cmd>Lspsaga preview_definition<CR>", { silent = true, noremap = true }) -- preview definition
+    end
 
+    do
+      --map("n", "<M>-<space>", "<cmd>Telescope find_files<CR>", { silent = true })
+    end
   end,
 }
 
