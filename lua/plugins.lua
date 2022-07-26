@@ -380,7 +380,7 @@ return require("packer").startup({
     -- Terminal.
     use({
       "akinsho/toggleterm.nvim",
-      keys = "<C-t>",
+      keys = (user_settings_file.toggleterm and user_settings_file.toggleterm.open_mapping) or "<C-t>",
       module = { "toggleterm", "toggleterm.terminal" },
       config = function()
         require("plugins/toggleterm")
