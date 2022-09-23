@@ -118,6 +118,7 @@ additional_plugins = {
   --     })
   --   end,
   -- },
+  { "jlcrochet/vim-razor" }
 }
 
 -- NOTE: here
@@ -249,7 +250,7 @@ local config = {
     vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
     vim.g.tokyonight_dark_sidebar = true
     vim.g.tokyonight_lualine_sidebar = true
-    vim.cmd("colorscheme tokyonight")
+    vim.cmd("colorscheme tokyonight-night")
     -- Other settings here
     -- For examples for disabling line number:
     -- vim.opt.number = false
