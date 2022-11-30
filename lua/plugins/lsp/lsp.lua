@@ -1,9 +1,7 @@
-local lsp_installer = require("nvim-lsp-installer")
-local user_settings = require("user_settings")
-lsp_installer.setup()
+local mason_lspconfig = require("mason-lspconfig")
 
-for _, server in pairs(lsp_installer.get_installed_servers()) do
-  require("lspconfig")[server.name].setup({
+for _, server in pairs(mason_lspconfig.get_installed_servers()) do
+  require("lspconfig")[server].setup({
     on_attach = function(client, bufnr)
       local lsp_signature_config = {
         hint_prefix = ""
@@ -20,8 +18,8 @@ for _, server in pairs(lsp_installer.get_installed_servers()) do
       local client_filetypes = client.config.filetypes or {}
       for _, filetype in ipairs(client_filetypes) do
         if #vim.tbl_keys(formatters.list_registered_formatters(filetype)) > 0 then
-          client.resolved_capabilities.document_formatting = false
-          client.resolved_capabilities.document_range_formatting = false
+          client.server_capabilities.documentFormattingProvider = false
+          client.server_capabilities.documentRangeFormattingProvider = false
         end
       end
 
