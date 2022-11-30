@@ -118,7 +118,7 @@ additional_plugins = {
   --     })
   --   end,
   -- },
-  { "jlcrochet/vim-razor" }
+  --{ "jlcrochet/vim-razor" }
 }
 
 -- NOTE: here
