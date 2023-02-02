@@ -23,6 +23,7 @@ disable_plugins = {
   nord = false,
   onedark = false,
   nvim_enfocado = false,
+  github_nvim_theme = false,
 
   -- NOTE: These plugins are for debugging. You can install
   -- Some debug servers with dap_install but the list of those
@@ -88,6 +89,7 @@ disable_plugins = {
 }
 
 additional_plugins = {
+    { "projekt0n/github-nvim-theme" }
   -- You can put your additional plugins here.
   -- Syntax is like normal packer.nvim Syntax.
   -- If you need to set some settings for your plugins
@@ -323,6 +325,7 @@ local config = {
     do -- open new window
       map("n", "<M-o>", "<cmd>vsplit<CR><cmd>Telescope find_files<CR>", {silent = true}) -- split left
       map("n", "<M-O>", "<cmd>split<CR><cmd>Telescope find_files<CR>", {silent = true}) -- split bellow
+      map("n", "<M-f>", "<cmd>tabnew<CR><cmd>Telescope live_grep<CR>", {silent = true})
     end
 
     do -- Lspsaga

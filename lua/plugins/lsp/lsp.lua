@@ -7,7 +7,7 @@ for _, server in pairs(mason_lspconfig.get_installed_servers()) do
         hint_prefix = ""
       }
 
-      for k, v in pairs(user_settings.lsp_signature) do
+      for k, v in pairs(require('user_settings').lsp_signature) do
         lsp_signature_config[k] = v
       end
 
